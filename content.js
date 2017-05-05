@@ -51,7 +51,8 @@ function updateWebsite() {
 			.css({
 				'color' : statusColor,
 				'white-space': 'pre-wrap',
-				'font-size' : '10px'
+				'font-size' : '12px',
+				'font-family' : '"Myriad Set Pro", "Helvetica Neue", Helvetica, Arial'
 			})
 			.text(message)
 		)
