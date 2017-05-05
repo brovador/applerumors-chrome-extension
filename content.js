@@ -1,5 +1,3 @@
-console.log($('title').text())
-
 productsStatuses = {}
 statusColors = {
 	'outdated' : '#AA0D23',
@@ -34,27 +32,38 @@ $.ajax({
 })
 
 function updateWebsite() {
-	console.log(productsStatuses)
-	var labels = $('span.chapternav-label').each(function(){
-		var product = replaceNbsps($(this).text().toLowerCase())
+	
+	//Configuration for headers in detail and purchase
+	$('.ac-ln-title a, .localnav-header a').each(function(){
+		console.log($(this).text())
+		var productStatus = getProductStatus($(this).text())
+		var statusColor = statusColors[productStatus[0]]
+		var message = productStatus[1]
+		$(this).css({
+			'backgroundColor' : statusColor,
+			'color' : 'white',
+			'padding' : '3px 10px',
+			'border-radius' : '5px',
+			'font-weight' : 'bold'
+		})
+		$(this).parent().append(
+			$('<span>')
+			.css({
+				'color' : statusColor,
+				'white-space': 'pre-wrap',
+				'font-size' : '10px'
+			})
+			.text(message)
+		)
+	})
 
-		if (product.includes('ipad mini')) {
-			product = 'ipad mini' //Fix for ipad mini
-		} else if (product != 'iphone se' && product.includes('iphone')) {
-			product = 'iphone' //Fix for iphone 7, 6s
-		} else if (product.includes('apple watch')) {
-			product = 'apple watch' //Fix for apple watch
-		}
-
-		console.log(product)
-
-		var status = productsStatuses[product]
-		if (status) {
-			var message = status[1]
-			var statusType = status[0]
-			var statusColor = statusColors[statusType] || 'none'
-			if (statusColor != 'none') {
-				$(this).css({
+	//Configuration for item carousels
+	$('span.chapternav-label').each(function(){
+		var productStatus = getProductStatus($(this).text())
+		if (productStatus) {
+			var statusColor = statusColors[productStatus[0]]
+			var message = productStatus[1]
+			$(this).css({
 					'backgroundColor' : statusColor,
 					'color' : 'white',
 					'padding': '1px 5px',
@@ -71,9 +80,22 @@ function updateWebsite() {
 					.attr('class', 'chapternav-new')
 					.text(message)
 				)
-			}
 		}
 	})
+}
+
+function getProductStatus(rawProductName) {
+	var product = replaceNbsps(rawProductName.trim().toLowerCase())
+
+	if (product.includes('ipad mini')) {
+		product = 'ipad mini' //Fix for ipad mini
+	} else if (product != 'iphone se' && product.includes('iphone')) {
+		product = 'iphone' //Fix for iphone 7, 6s
+	} else if (product.includes('apple watch')) {
+		product = 'apple watch' //Fix for apple watch
+	}
+
+	return productsStatuses[product]
 }
 
 function replaceNbsps(str) {
