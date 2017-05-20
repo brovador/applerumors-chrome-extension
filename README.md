@@ -2,6 +2,12 @@
 
 A Google chrome extension to show [mac rumors buyers guide](https://buyersguide.macrumors.com) inside Apple's website.
 
+## Install
+
+Install as developer extension:
+
+[https://developer.chrome.com/extensions/getstarted#unpacked]()
+
 ## Screenshots
 
 ### Products carousel
