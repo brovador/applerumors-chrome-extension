@@ -90,10 +90,10 @@
 	function getProductStatus(rawProductName) {
 		var product = replaceNbsps(rawProductName.trim().toLowerCase())
 
+		console.log(product)
+		
 		if (product.includes('ipad mini')) {
 			product = 'ipad mini' //Fix for ipad mini
-		} else if (product != 'iphone se' && product.includes('iphone')) {
-			product = 'iphone' //Fix for iphone 7, 6s
 		} else if (product.includes('apple watch')) {
 			product = 'apple watch' //Fix for apple watch
 		}
